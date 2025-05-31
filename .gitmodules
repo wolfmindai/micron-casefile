@@ -1,0 +1,9 @@
+[submodule "restricted"]
+	path = restricted
+	url = git@github.com:wolfmindai/micron-casefile-sealed.git
+[submodule "emails-private"]
+	path = emails-private
+	url = git@github.com:wolfmindai/micron-casefile-emails.git
+[submodule "addenda-private"]
+	path = addenda-private
+	url = git@github.com:wolfmindai/micron-casefile-addenda.git
