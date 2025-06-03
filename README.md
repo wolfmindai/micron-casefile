@@ -4,7 +4,7 @@ This repository serves as the **canonical public anchor** for a sealed evidentia
 
 ---
 
-## 🔐 Anchoring Commit
+##  Anchoring Commit
 
 **Commit:** `2d4d933`  
 **Date:** 2025-05-31  
@@ -14,7 +14,7 @@ This commit anchors the repository’s structure as of May 31, 2025. All future 
 
 ---
 
-## 📦 Repository Layout
+##  Repository Layout
 
 This repository includes **three private submodules** for evidentiary control and separation of disclosure classes:
 
@@ -28,7 +28,7 @@ These submodules are locked and write-protected under private governance until t
 
 ---
 
-## 🧾 Purpose
+## Purpose
 
 This repository is intended for **public integrity assurance**. While not containing raw evidence directly, it cryptographically anchors the structure and timing of its linked submodules and commits.
 
@@ -38,7 +38,7 @@ It may be referenced in legal filings, regulatory disclosures, and compliance fr
 
 **Maintained by:**  
 Wizzle (Wolf Mind AI)  
-📧 `wizzle@wolfmindai.com`  
-🔗 https://github.com/wolfmindai/micron-casefile  
-🔐 [VEN Structural Disclosure Protocol]
+ `wizzle@wolfmindai.com`  
+ https://github.com/wolfmindai/micron-casefile  
+ [VEN Structural Disclosure Protocol]
 # micron-casefile

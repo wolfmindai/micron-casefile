@@ -7,3 +7,5 @@
 [submodule "restricted"]
 	path = restricted
 	url = git@github.com:wolfmindai/micron-casefile-sealed.git
+[submodule "micron-private"]
+	url = git@github-sec2025:wolfmindai/Micron_SEC_TCR_Addendum_2025_Compliance_Record.git
