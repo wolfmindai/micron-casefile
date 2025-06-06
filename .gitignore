@@ -1,2 +1,4 @@
 diff.txt
+hashes/*.txt
+hashes/*.asc
 *.backup
