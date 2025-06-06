@@ -1,0 +1,510 @@
+diff --git a/addenda-private b/addenda-private
+index f7bac00..a210db7 160000
+--- a/addenda-private
++++ b/addenda-private
+@@ -1 +1 @@
+-Subproject commit f7bac00156832b654eb63a77544bffd107934d5d
++Subproject commit a210db7d7755db5eaa3b267472af7774197ce919
+diff --git a/docs/Repo-Authorship-README.md b/docs/Repo-Authorship-README.md
+new file mode 100644
+index 0000000..84be4df
+--- /dev/null
++++ b/docs/Repo-Authorship-README.md
+@@ -0,0 +1,8 @@
++# Signal Unification
++
++The early-stage authorship (commits signed as `wizzle`) reflect strategic acceleration and raw ideation.
++
++The final form, structure, and signed narrative trajectory are sealed under `seaph@wolfmindai.com`.
++
++All branches converge. Signal is now unified.
++
+diff --git a/gen-sha256-hashes.sh b/gen-sha256-hashes.sh
+new file mode 100755
+index 0000000..c3044d5
+--- /dev/null
++++ b/gen-sha256-hashes.sh
+@@ -0,0 +1,45 @@
++#!/bin/bash
++
++# Variables
++REPO_DIR="$(pwd)"
++EXHIBIT_DIR="./evidence-packet"
++OUTPUT_DIR="./hashes"
++OUTPUT_FILE="$OUTPUT_DIR/repo_sha256_hashes.txt"
++EXHIBIT_HASHES_FILE="$OUTPUT_DIR/exhibits_sha256_hashes.txt"
++FILES_HASHES_FILE="$OUTPUT_DIR/files_sha256_hashes.txt"
++GPG_KEY="your-gpg-key-id"  # Replace with your GPG key ID for signing the hashes
++
++# Create output directory
++mkdir -p "$OUTPUT_DIR"
++
++# 1. SHA-256 Hash for Entire Repository (Including Commit History)
++echo "Generating SHA-256 hash for the entire repository (commit history)..."
++git rev-parse HEAD > "$OUTPUT_FILE"
++echo "SHA-256 of the current commit: $(cat $OUTPUT_FILE)"
++
++# 2. SHA-256 Hash for the Files (Excluding Git History)
++echo "Generating SHA-256 hashes for all files in the repository..."
++git ls-files | xargs -I {} sha256sum {} > "$FILES_HASHES_FILE"
++echo "SHA-256 hashes for the files saved to $FILES_HASHES_FILE"
++
++# 3. SHA-256 Hash for the Specific Folder (e.g., Exhibits)
++echo "Generating SHA-256 hashes for files in the $EXHIBIT_DIR folder..."
++# find "$EXHIBIT_DIR" -type f -exec sha256sum {} \; > "$EXHIBIT_HASHES_FILE"
++find . -type f -exec sha256sum {} \; > "$FILES_HASHES_FILE"
++
++echo "SHA-256 hashes for the $EXHIBIT_DIR folder saved to $EXHIBIT_HASHES_FILE"
++
++# 4. Optionally, Sign the Hashes with GPG
++echo "Signing the hashes with your GPG key..."
++gpg --armor --detach-sign --output "$OUTPUT_DIR/repo_sha256_hashes.txt.asc" "$OUTPUT_FILE"
++gpg --armor --detach-sign --output "$OUTPUT_DIR/files_sha256_hashes.txt.asc" "$FILES_HASHES_FILE"
++gpg --armor --detach-sign --output "$OUTPUT_DIR/exhibits_sha256_hashes.txt.asc" "$EXHIBIT_HASHES_FILE"
++echo "Hashes signed and saved as .asc files."
++
++# Final summary
++echo "Summary of generated and signed hash files:"
++echo "1. Repository commit hash: $OUTPUT_FILE"
++echo "2. All files' SHA-256 hashes: $FILES_HASHES_FILE"
++echo "3. evidence-packet folder SHA-256 hashes: $EXHIBIT_HASHES_FILE"
++echo "4. Signed hash files: *.asc"
++
+diff --git a/hashes/exhibits_sha256_hashes.txt b/hashes/exhibits_sha256_hashes.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/hashes/exhibits_sha256_hashes.txt.asc b/hashes/exhibits_sha256_hashes.txt.asc
+new file mode 100644
+index 0000000..e265dff
+--- /dev/null
++++ b/hashes/exhibits_sha256_hashes.txt.asc
+@@ -0,0 +1,14 @@
++-----BEGIN PGP SIGNATURE-----
++
++iQGzBAABCgAdFiEEnrpgz8VtDCLL6BtYGHWcDb4bES8FAmg+yzQACgkQGHWcDb4b
++ES/s4wv+LFgONB9FlMMNy/ljl+7R1PHqbIfYB1jAjX0IYfCXGPw17xiRSIKChVDl
++YEyZNKfFjjObGiM4urc91ulQtv4JLsUT2aMPZViW91j5t/C4jM1OIKppO8QkaSKJ
++2ZRXY9nBWnV6llOvcShsgSZSmlhAiNJvcvbnc08vUMdxh6Q2BgExQ+0oPPhjlHth
++nM79jC41WFLCtCNNtJMnKDPxFLFXSn1XxAvhWxUFr83SqcCvIAPVbqAwATKIc5MH
++SIrzxzsHK2gDY9dI2RhmVK3tMZ1ByjQ2CyKdjQfuszwkVdFFJsY0wIQBsUyn1iW5
++BDW3l7im8FiSo9J2vTcbTyNdDBNI0ddTEU4/woKWjv0NzEGK/ZGac+7Wiw0yvMic
++sDJOuKA84srXQUxiUoFCoRhuVtSX36J15c7Ha0xqzPdlHM+vhQGMbCe1aEmAfW5e
++4sLZ87ghy8Ccx9mWzmgCZqcdmZ1VIGaE9Bef9MMuc5xXcRhZbYyWWYNzUkilFJUv
++uj16A+ku
++=vsxp
++-----END PGP SIGNATURE-----
+diff --git a/hashes/files_sha256_hashes.txt b/hashes/files_sha256_hashes.txt
+new file mode 100644
+index 0000000..349fbcb
+--- /dev/null
++++ b/hashes/files_sha256_hashes.txt
+@@ -0,0 +1,288 @@
++6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1  ./.git/info/exclude
++52f9c595ea01b15e3ca7eb847ba177c0068667444c12f292d736001aa35f0723  ./.git/logs/HEAD
++52f9c595ea01b15e3ca7eb847ba177c0068667444c12f292d736001aa35f0723  ./.git/logs/refs/heads/main
++5a65f5ae6e6f7afaa941ef1a55c4eb59ba98f4bd57db336a18c9437a6d0133ca  ./.git/logs/refs/remotes/origin/HEAD
++4415d5a0829dab3a00a7fe3e144047ecdfa264fb2631cd38925eed8037451eea  ./.git/logs/refs/remotes/origin/main
++28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80  ./.git/HEAD
++85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee  ./.git/description
++6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1  ./.git/modules/restricted/info/exclude
++14ce4322b5769940db31cd2c7a961b2977931c24738c952af9549cff3fddd745  ./.git/modules/restricted/logs/HEAD
++3f193b45024736bf012f81be4ca1bbc9b4b8ae557c280ed8869bbf3ed1a872a7  ./.git/modules/restricted/logs/refs/heads/master
++3f193b45024736bf012f81be4ca1bbc9b4b8ae557c280ed8869bbf3ed1a872a7  ./.git/modules/restricted/logs/refs/remotes/origin/HEAD
++fbb10687af6eec9f6bda2f8cbe53e8bfc57175f59d782ac20081554b02372e31  ./.git/modules/restricted/HEAD
++85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee  ./.git/modules/restricted/description
++04e3a64f4d070e1c45332d2c0e6ee88f2f189256ae7c998736b563d3c91a7b18  ./.git/modules/restricted/config
++1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437  ./.git/modules/restricted/hooks/commit-msg.sample
++8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106  ./.git/modules/restricted/hooks/update.sample
++e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619  ./.git/modules/restricted/hooks/prepare-commit-msg.sample
++ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a  ./.git/modules/restricted/hooks/pre-push.sample
++a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f  ./.git/modules/restricted/hooks/push-to-checkout.sample
++4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3  ./.git/modules/restricted/hooks/pre-rebase.sample
++f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a  ./.git/modules/restricted/hooks/pre-commit.sample
++0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7  ./.git/modules/restricted/hooks/applypatch-msg.sample
++e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475  ./.git/modules/restricted/hooks/pre-applypatch.sample
++d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53  ./.git/modules/restricted/hooks/pre-merge-commit.sample
++a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989  ./.git/modules/restricted/hooks/pre-receive.sample
++81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5  ./.git/modules/restricted/hooks/post-update.sample
++f3c0228d8e827f1c5260ac59fdd92c3d425c46e54711ef713c5a54ae0a4db2b4  ./.git/modules/restricted/hooks/fsmonitor-watchman.sample
++fbb10687af6eec9f6bda2f8cbe53e8bfc57175f59d782ac20081554b02372e31  ./.git/modules/restricted/refs/heads/master
++cdc65e67690c4c6475174e5ec662b70655246a2f3924354778835ab3be70aa76  ./.git/modules/restricted/refs/remotes/origin/HEAD
++0d0d85fc6ce60e7f27bb68b813fda00378cb506e2a2da610a0c4c6edd6df9708  ./.git/modules/restricted/index
++856467331cb3f4b721106793d5ffc21f8bf90c40c00cf4b47efb244d3a684e66  ./.git/modules/restricted/packed-refs
++921511f6a97a94217b9adb4a887058a62147de8dc7356c8d1a621c66c27ee2ea  ./.git/modules/restricted/objects/pack/pack-7247f3a5859167929bbbe9a72477736c4c2ce423.pack
++7c40f0a16e88654ec0939bc50d704ea669561f67bedadadefae582a6657ee959  ./.git/modules/restricted/objects/pack/pack-7247f3a5859167929bbbe9a72477736c4c2ce423.idx
++6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1  ./.git/modules/emails-private/info/exclude
++f35f93a8cac8ce3298a91d9f0cce4cbdb1ae5ec122a1e922908c1c5e8d654578  ./.git/modules/emails-private/logs/HEAD
++117da307032a4ed4c65ee70ac4760a519daf633aba5e2a2d7d6030b2fe78017b  ./.git/modules/emails-private/logs/refs/heads/master
++117da307032a4ed4c65ee70ac4760a519daf633aba5e2a2d7d6030b2fe78017b  ./.git/modules/emails-private/logs/refs/remotes/origin/HEAD
++89f8ab6a0cad62d7c75b00bba3f32c08fc2b8919d0ba8b2b4a23a59dd84f11f6  ./.git/modules/emails-private/HEAD
++85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee  ./.git/modules/emails-private/description
++f540a9047b9f7326841e98bbaa29d11c790a1f75514da931fe926890504c3614  ./.git/modules/emails-private/config
++1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437  ./.git/modules/emails-private/hooks/commit-msg.sample
++8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106  ./.git/modules/emails-private/hooks/update.sample
++e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619  ./.git/modules/emails-private/hooks/prepare-commit-msg.sample
++ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a  ./.git/modules/emails-private/hooks/pre-push.sample
++a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f  ./.git/modules/emails-private/hooks/push-to-checkout.sample
++4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3  ./.git/modules/emails-private/hooks/pre-rebase.sample
++f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a  ./.git/modules/emails-private/hooks/pre-commit.sample
++0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7  ./.git/modules/emails-private/hooks/applypatch-msg.sample
++e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475  ./.git/modules/emails-private/hooks/pre-applypatch.sample
++d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53  ./.git/modules/emails-private/hooks/pre-merge-commit.sample
++a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989  ./.git/modules/emails-private/hooks/pre-receive.sample
++81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5  ./.git/modules/emails-private/hooks/post-update.sample
++f3c0228d8e827f1c5260ac59fdd92c3d425c46e54711ef713c5a54ae0a4db2b4  ./.git/modules/emails-private/hooks/fsmonitor-watchman.sample
++89f8ab6a0cad62d7c75b00bba3f32c08fc2b8919d0ba8b2b4a23a59dd84f11f6  ./.git/modules/emails-private/refs/heads/master
++cdc65e67690c4c6475174e5ec662b70655246a2f3924354778835ab3be70aa76  ./.git/modules/emails-private/refs/remotes/origin/HEAD
++cfff3380d208d22cac67f4adcdfa00815cdebcb955815137861766e3198eb0e0  ./.git/modules/emails-private/index
++48478b79debae0edeea5d1855210d1eece46d98b566ef7840d02e72682e20426  ./.git/modules/emails-private/packed-refs
++78b5eccfc9883d1d8f9b7c93bd03db82b4c60910e82d417b14de582cfa42b899  ./.git/modules/emails-private/objects/pack/pack-9a8f950da20d283d24dc6d1f4cad6294c20bc0f1.pack
++7fbcb867d534c3f1d5a8ab230a6a7726c4e24752f57397bc66568452a9612e69  ./.git/modules/emails-private/objects/pack/pack-9a8f950da20d283d24dc6d1f4cad6294c20bc0f1.idx
++6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1  ./.git/modules/evidence-packet/info/exclude
++8e83c1747789d99e712bd589552c7b6dbcb8864085004fc9ca7a61cffc167bfc  ./.git/modules/evidence-packet/logs/HEAD
++8e83c1747789d99e712bd589552c7b6dbcb8864085004fc9ca7a61cffc167bfc  ./.git/modules/evidence-packet/logs/refs/heads/main
++8e83c1747789d99e712bd589552c7b6dbcb8864085004fc9ca7a61cffc167bfc  ./.git/modules/evidence-packet/logs/refs/remotes/origin/HEAD
++28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80  ./.git/modules/evidence-packet/HEAD
++85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee  ./.git/modules/evidence-packet/description
++671915d20095db93d4099bd2fb30a68f6640b39055c13bdb6d8d964dd4465b20  ./.git/modules/evidence-packet/config
++1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437  ./.git/modules/evidence-packet/hooks/commit-msg.sample
++8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106  ./.git/modules/evidence-packet/hooks/update.sample
++e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619  ./.git/modules/evidence-packet/hooks/prepare-commit-msg.sample
++ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a  ./.git/modules/evidence-packet/hooks/pre-push.sample
++a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f  ./.git/modules/evidence-packet/hooks/push-to-checkout.sample
++4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3  ./.git/modules/evidence-packet/hooks/pre-rebase.sample
++f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a  ./.git/modules/evidence-packet/hooks/pre-commit.sample
++0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7  ./.git/modules/evidence-packet/hooks/applypatch-msg.sample
++e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475  ./.git/modules/evidence-packet/hooks/pre-applypatch.sample
++d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53  ./.git/modules/evidence-packet/hooks/pre-merge-commit.sample
++a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989  ./.git/modules/evidence-packet/hooks/pre-receive.sample
++81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5  ./.git/modules/evidence-packet/hooks/post-update.sample
++f3c0228d8e827f1c5260ac59fdd92c3d425c46e54711ef713c5a54ae0a4db2b4  ./.git/modules/evidence-packet/hooks/fsmonitor-watchman.sample
++f761a97521105633066b78b339d997da09d0cad6fcccdf4809c70c03cc3931c8  ./.git/modules/evidence-packet/refs/heads/main
++2bb6a24aa0fc6c484100f5d51a29bbad841cd2c755f5d93faa204e5dbb4eb2b4  ./.git/modules/evidence-packet/refs/remotes/origin/HEAD
++c9bd8aff57eed61387dc59a52ceffe906d17fc24221f3b5c39bd720e0bcb5b36  ./.git/modules/evidence-packet/index
++a7c1d8afc9af859da07698be29f16ae2d3ed7cbf1d148412057ff1a7e86b820f  ./.git/modules/evidence-packet/packed-refs
++ac5df9d63927d92d0c9fc06431d0fc31867faadb0d83f0bb731a24aeb7b1898b  ./.git/modules/evidence-packet/objects/pack/pack-dfc8c3f72ddae2611c108b3e252812e965e210e5.pack
++f85dc70f22fce60355da5b7e03d0ed3b896a1c9bb599a5dd9a8d28588ae15462  ./.git/modules/evidence-packet/objects/pack/pack-dfc8c3f72ddae2611c108b3e252812e965e210e5.idx
++6671fe83b7a07c8932ee89164d1f2793b2318058eb8b98dc5c06ee0a5a3b0ec1  ./.git/modules/addenda-private/info/exclude
++158306e006faf937480d544d760a429879014185d72a8d3564c0e93cac8b366d  ./.git/modules/addenda-private/logs/HEAD
++ffbdb77989c6824fa21a317d81e6a00ee79c87ea607e2f01c5968be8fb9954c4  ./.git/modules/addenda-private/logs/refs/heads/master
++ffbdb77989c6824fa21a317d81e6a00ee79c87ea607e2f01c5968be8fb9954c4  ./.git/modules/addenda-private/logs/refs/remotes/origin/HEAD
++4ec40d718e403df7613a5155ec7181830a24d8cadbbb28bf39396dc4de87d1aa  ./.git/modules/addenda-private/HEAD
++85ab6c163d43a17ea9cf7788308bca1466f1b0a8d1cc92e26e9bf63da4062aee  ./.git/modules/addenda-private/description
++ede283a76920c86926b2c94f8e6a54c676c859f323f1ba1c95ef4dbdda986a59  ./.git/modules/addenda-private/config
++1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437  ./.git/modules/addenda-private/hooks/commit-msg.sample
++8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106  ./.git/modules/addenda-private/hooks/update.sample
++e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619  ./.git/modules/addenda-private/hooks/prepare-commit-msg.sample
++ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a  ./.git/modules/addenda-private/hooks/pre-push.sample
++a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f  ./.git/modules/addenda-private/hooks/push-to-checkout.sample
++4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3  ./.git/modules/addenda-private/hooks/pre-rebase.sample
++f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a  ./.git/modules/addenda-private/hooks/pre-commit.sample
++0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7  ./.git/modules/addenda-private/hooks/applypatch-msg.sample
++e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475  ./.git/modules/addenda-private/hooks/pre-applypatch.sample
++d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53  ./.git/modules/addenda-private/hooks/pre-merge-commit.sample
++a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989  ./.git/modules/addenda-private/hooks/pre-receive.sample
++81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5  ./.git/modules/addenda-private/hooks/post-update.sample
++f3c0228d8e827f1c5260ac59fdd92c3d425c46e54711ef713c5a54ae0a4db2b4  ./.git/modules/addenda-private/hooks/fsmonitor-watchman.sample
++4ec40d718e403df7613a5155ec7181830a24d8cadbbb28bf39396dc4de87d1aa  ./.git/modules/addenda-private/refs/heads/master
++cdc65e67690c4c6475174e5ec662b70655246a2f3924354778835ab3be70aa76  ./.git/modules/addenda-private/refs/remotes/origin/HEAD
++1563ea87185297b986dd296d6902e70fbc1f905df6e02360059455ae870f1028  ./.git/modules/addenda-private/index
++ef6c3d7aa69dc330c92699561ae39d10cc8ef5f1275cc4fc4c7cc8892f2a7355  ./.git/modules/addenda-private/packed-refs
++561bca0cd5d216b38774fd48a0eed7207d354748a1e53c02c4e0b2435f78c347  ./.git/modules/addenda-private/objects/pack/pack-7408028950911517c6281cbd8a7fd0327050daf2.idx
++5a109d049e2996ccda7820b72cb3b8fc1916c43ecdbf06f0e9ac1e9fe7f350fa  ./.git/modules/addenda-private/objects/pack/pack-7408028950911517c6281cbd8a7fd0327050daf2.pack
++ddc965f85f40abf726835c03f65bb329444774b3454a159dd718265286578609  ./.git/config
++1f74d5e9292979b573ebd59741d46cb93ff391acdd083d340b94370753d92437  ./.git/hooks/commit-msg.sample
++8d5f2fa83e103cf08b57eaa67521df9194f45cbdbcb37da52ad586097a14d106  ./.git/hooks/update.sample
++e9ddcaa4189fddd25ed97fc8c789eca7b6ca16390b2392ae3276f0c8e1aa4619  ./.git/hooks/prepare-commit-msg.sample
++ecce9c7e04d3f5dd9d8ada81753dd1d549a9634b26770042b58dda00217d086a  ./.git/hooks/pre-push.sample
++a53d0741798b287c6dd7afa64aee473f305e65d3f49463bb9d7408ec3b12bf5f  ./.git/hooks/push-to-checkout.sample
++4febce867790052338076f4e66cc47efb14879d18097d1d61c8261859eaaa7b3  ./.git/hooks/pre-rebase.sample
++f9af7d95eb1231ecf2eba9770fedfa8d4797a12b02d7240e98d568201251244a  ./.git/hooks/pre-commit.sample
++0223497a0b8b033aa58a3a521b8629869386cf7ab0e2f101963d328aa62193f7  ./.git/hooks/applypatch-msg.sample
++e15c5b469ea3e0a695bea6f2c82bcf8e62821074939ddd85b77e0007ff165475  ./.git/hooks/pre-applypatch.sample
++d3825a70337940ebbd0a5c072984e13245920cdf8898bd225c8d27a6dfc9cb53  ./.git/hooks/pre-merge-commit.sample
++a4c3d2b9c7bb3fd8d1441c31bd4ee71a595d66b44fcf49ddb310252320169989  ./.git/hooks/pre-receive.sample
++81765af2daef323061dcbc5e61fc16481cb74b3bac9ad8a174b186523586f6c5  ./.git/hooks/post-update.sample
++f3c0228d8e827f1c5260ac59fdd92c3d425c46e54711ef713c5a54ae0a4db2b4  ./.git/hooks/fsmonitor-watchman.sample
++1381aec9c560992f34bdcc6c19a759513cc67ea218c58547b30d2f10904424ee  ./.git/refs/heads/main
++2bb6a24aa0fc6c484100f5d51a29bbad841cd2c755f5d93faa204e5dbb4eb2b4  ./.git/refs/remotes/origin/HEAD
++1381aec9c560992f34bdcc6c19a759513cc67ea218c58547b30d2f10904424ee  ./.git/refs/remotes/origin/main
++cd60f5e0b2a098c5668de97aaa67b579e438e9cec1eecbc448e99299e134cd01  ./.git/index
++716699597889fd4cf628e2549d498d0baf7c3e70c3b307a7e35d6a99970cdd74  ./.git/packed-refs
++3c687ed9a8e4fe75427354a78c7dfa97049ddeffdea6b84463d691f370761473  ./.git/COMMIT_EDITMSG
++36878484bb69fe42a76c2f7bcb9be408ce2a394c4aee559ab2d8823875203b55  ./.git/objects/d9/bc1ef97f8cce2734c81aacdbfc2192a1c606ac
++ba4db68d910de6b123b2d0262c2fe92ac6ef391bd26bf3a3f3fcd5fd1a9cdf19  ./.git/objects/a6/a2a7c9820633e415310a1646b93c22f2227a7f
++c01f2f153f1d9c9259cf01b6921e747a878360889941e79f8b53dc58e30baa0f  ./.git/objects/b1/5bef90e0f871082e1cddebeb13dc05979d747f
++85875d215671d90fa2303b4a196c667806b22d313a0de02c7c9acd93a4ef86a0  ./.git/objects/69/acfb3f553220f9d162793ae60f058b55583d99
++a22158835f8635dc492ae835adfb1308594bc3ad94797685b6a9b2b0546db28a  ./.git/objects/66/f7729cf86868ea314c5092191857675c146f6b
++0b21f8f1e5fbf4d23e2d43c0828560bac22c97f9351cfe0757df64184fde72db  ./.git/objects/ab/57fa8b242c127faa150c66842279a98adabeb1
++4c9094c0b5e04fd9ba5dbaed2515fceb0ea5ce9c20c9a62ea566415019870a37  ./.git/objects/33/2dae9dc74fbe959ac6afdb5085673a5d40316d
++9d1952ff359200b5191bf0286f4cc513aee3b6305a7378764d5eb4a73660569b  ./.git/objects/pack/pack-ad9d450e9b5d3e769c8632a2bb3bf5b18ca11bd9.pack
++026ec03ed45c6534dbd4aefae9b65734ceaa3e74319ed85deb28c80f9a2a2681  ./.git/objects/pack/pack-ad9d450e9b5d3e769c8632a2bb3bf5b18ca11bd9.idx
++35ef27387b5591a38aa5d0e565d48e960362443b66e4ece8a635821dc2118054  ./.gitmodules
++3362e30145f56840530e6a006884c8f6b74779546e1fab6e366ab5dfe4b5be9f  ./hashes/files_sha256_hashes.txt.asc
++0ac79f86eed154c3ba53121a731f9c62278a425b5483a66c4e1a116347fe4e3d  ./hashes/files_sha256_hashes.txt
++14e83ea9c1751c2709a68452995584538f9d92f511e0066fdf9362860518ac0b  ./hashes/exhibits_sha256_hashes.txt.asc
++e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./hashes/exhibits_sha256_hashes.txt
++1381aec9c560992f34bdcc6c19a759513cc67ea218c58547b30d2f10904424ee  ./hashes/repo_sha256_hashes.txt
++e3d9fb28b7ca9d4705ae7ebfe6d7fee7cee2f6b73e6c32ebff9715f970f9fb2d  ./hashes/repo_sha256_hashes.txt.asc
++aa0c69a49010c2829ec63cdfc1570717fa58ff69f78887d9c6c2a93678f88fb0  ./restricted/.git
++5042790e431d34db822f139c30f07a7f26d1bb564ad484841d8b3b76b5437164  ./restricted/README.md
++334760ea36055bfadaf64cf9f71d95fc7d0f39bce96b7a83a0d2c23ef8a03a7a  ./gen-sha256-hashes.sh
++69a72ea3e9f80e00d4a2dccc90c00baabe545dd35f522ccf39e2a1bb8c7e1e1f  ./README.md
++691ec152eb6b8fa1cbb14cdda089a691433831e49a2e3d5a68351b977069996d  ./emails-private/.git
++1d407f9c99f92ef99a3cc3b98466958491b206950bd903b2264affb1c11f7dd1  ./emails-private/README.md
++79c61641218727a4643448d6e02d73ce355088615eadc321531f8f74033471f7  ./evidence-packet/09_Exhibit_E6_Gross_Pay_Conflict_and_Tax_Ambiguity.pdf
++97fb705a74d4cd1d971a978b88387a9069fd9aa2220bd2726eb78079a2144cc7  ./evidence-packet/04_Exhibit_E1_Stub_Conflict_and_Compensation_Reversal.pdf
++e44060cbae72767fe8a86fe0b3173ce054b8be718400b03c542f5aa52db243df  ./evidence-packet/.git
++200a1ea56b0db5df7b7784008d049523c5569dcf7554717cb593ebe75462c7bf  ./evidence-packet/E3/RequiredDisclosureInformationMicronTechnologyIncRetirementatMicronRAM-Plan.pdf
++92bb53a69376dc8a9dc64a65b5f14e1d725f2bb7b16c282d4a8802eb204d22c3  ./evidence-packet/E3/Micron_-_2025_Equity_Incentive_Plan_Prospectus_1.21.25.pdf
++683b74a42a4b372bc8d0c0457eff78975b35c77db022178ef863bf2b7a6f3330  ./evidence-packet/E3/micron-pay-seaph-antelmi-email-record-2025-1.png
++4e6beb1ae53f4a73ecefa29e7cdec4cc403408cb4eaf04ce68096e5fe186d3e7  ./evidence-packet/E3/2025_Equity_Incentive_Plan.pdf
++510a9f2446f1d9cd5687385c6e07c4c030149a27283eea006e14e4d454000566  ./evidence-packet/E3/micron-pay-seaph-antelmi-email-record-2025-2.png
++4c5513cd63e024cb5679a20fed6acd8a0be9a942c44e057533d266b4ce827575  ./evidence-packet/E3/payroll_confusioni_may_01_and_02_2025.png
++648ee7e87110713259eabbd5bd6f4271a81c2544947f6e93a76130e0cfec89cf  ./evidence-packet/E3/email_may_1_payroll.png
++317dac82962ea6adc28caf267e21ff29de88cd5d9eed8e53be8af29ddb008a8f  ./evidence-packet/E3/22.04.01_Micron_Technology_Inc._Employee_Stock_Purchase_Plan_As_approved.pdf
++f06a87ff42936ec6d590b598262cbab88f5fd1ee97436bab301ebd17b623444e  ./evidence-packet/E3/email_may_2_payroll.png
++1e64ca039392bdfcd9437b260fce11ed063f26c4cd4de4e3bce42f1e071fdc77  ./evidence-packet/E3/Seaph_Micron_Paystubs_2025_Plus_Year_End_2024.zip
++bce7925c3bec68a57283cbc5cff8529f5de60fe8e0882d181563abac0efe107b  ./evidence-packet/E3/payroll_confusioni_may_01_and_02_2025-2.png
++a5ee82caee142de0582d19ad10770671c6d15a00b3b27f7956530243008e1324  ./evidence-packet/E3/Payroll_Discrepancy_Request_May_2_2025.pdf
++fe7cb856f81a242fcdcad958435dfb7d1bedff44f1c33821216b213b7451100f  ./evidence-packet/E3/Payroll_Inquiry_Response_April_30_2025.pdf
++309022960eead0b05e08b87df6b4fd8253bc767e264156bc1af27e7a781ab4e7  ./evidence-packet/07_Exhibit_E4_Retaliation_and_Boundary_Violations.pdf
++db6a435218ee2c5808b1dac4be7c8b1cde0dbe1d2bb0542dd9f682252fa4de23  ./evidence-packet/E2/E2_Midyear_Checkin_2025.pdf
++21072ae7b61daf3da6256193bc72c5256d077fe6bee75f2c40a11f3f78f5c928  ./evidence-packet/E2/2025_Performance_Review_Suppression_Evidence_0.jpg
++be1d9e5485939e5cc0b362eeb4fd0cfb2bb4960173567e3c4614187c2e2127f6  ./evidence-packet/E2/ReviewSuppressionGraphic_1.png
++8b3d6830eb6a08d6daa8a7facbe28523a7e3ea975a2e804a6728dabf4d6b2a64  ./evidence-packet/E2/2025_Performance_Review_Suppression_Evidence_1.jpg
++2b913b37d0f967941eeb848dd09de11b5c03e483c14919b53c0c77577cb8d024  ./evidence-packet/Exhibit_E1_Stub_Conflict_and_Compensation_Reversal_May2025_v1.1.pdf
++c4828250cda1b230e89caf9ed83b34079918cb49214ac29b58e669117215701d  ./evidence-packet/E6/Pay_Stub_May_02_2025-1.png
++2f9ffa73ca6ed5dbbe9aa454e61a5e5ee6764bff85aeba6cf3aa6fd7a65d002a  ./evidence-packet/E6/Vanguard_May_2025_Deposits_From_Micron.png
++e6aa1dd8b6e9ca217b41015ce769919ee51f249e7205cc962ad3e952c2d453fc  ./evidence-packet/E6/Pay_Stub_May_02_2025-2.png
++f38f4149df78d99bfe8977c80f59c75d04be5fd042527ef2c60074cdcdaa7b03  ./evidence-packet/E6/Amex_May_2025_Deposits_From_Micron.png
++7befd618b3e773f86568085065825ae050ba2c31bc1e2ed52eb50f3e946bbcef  ./evidence-packet/01_Cover_Statement.pdf
++a7f1e7cf32135cd4559ecacdaeefd679fec1d8d7299203ff112691930fc7ae5b  ./evidence-packet/10_Submission_Inventory_SEC_TCR_Addendum_May2025.pdf
++17ea1fdcdf53c21c878e7175d9d90d9a40283ca8a8812c58f0cb2cbb2565827b  ./evidence-packet/02_Addendum_SeaphAntelmi.pdf
++e5e0499f6c042f0207b9af74593b26bc561f56929f2b119bd757e7c09a79dd26  ./evidence-packet/08_Exhibit_E5_Original_TCR_Confirmation.pdf
++298f9d2705987efda92c7511e18693256c3cd6dbf75e670842bb86c6f2e412e9  ./evidence-packet/03_Exhibit_Index_E1-E5.pdf
++c4828250cda1b230e89caf9ed83b34079918cb49214ac29b58e669117215701d  ./evidence-packet/E1/Pay_Stub_May_02_2025-1.png
++2f9ffa73ca6ed5dbbe9aa454e61a5e5ee6764bff85aeba6cf3aa6fd7a65d002a  ./evidence-packet/E1/Vanguard_May_2025_Deposits_From_Micron.png
++fdddd16a0f357248b7eb2bb1305384d7671952d5d0a0e211a39a7f4cc7d503d4  ./evidence-packet/E1/May-1-2025-Double-Paystub-Confusion.png
++e6aa1dd8b6e9ca217b41015ce769919ee51f249e7205cc962ad3e952c2d453fc  ./evidence-packet/E1/Pay_Stub_May_02_2025-2.png
++f38f4149df78d99bfe8977c80f59c75d04be5fd042527ef2c60074cdcdaa7b03  ./evidence-packet/E1/Amex_May_2025_Deposits_From_Micron.png
++c38304d01b84e3c221fe1a783e20fbea3919175626610d4add273e34db67eaa5  ./evidence-packet/05_Exhibit_E2_Performance_Review_Suppression.pdf
++6f3da02b415843dfa458449bb3384dcee514a17fb3afdc9a056473012a0290a2  ./evidence-packet/06_Exhibit_E3_Unrefunded_ESPP_Deductions.pdf
++0e35e774477b49904b336c996059404405e7cb190b92e61198fe61600fe5af86  ./statements-disclaimers/Affirmation of Authorship and Strategic Integrity_.docx
++e65aa457fd7d963170ffb56ca0bb2bb3a6364bbd93dfb01dd4a69bccd882a78c  ./statements-disclaimers/Title: Statement of Authorship and Strategic Use of Generative AI in SEC Whistleblower Submission.docx
++024062f6bf2449f0e0d89073e70f20d27208a0accf10cbb9fd0e7c6bec8eda04  ./addenda-private/Reports - Damages and Exposure/Micron Retaliation Pattern Report.docx
++18b71041f78033eabb8341bcf40ca4f820ae5e59bb65b6255ad1a14ec8b48500  ./addenda-private/Reports - Damages and Exposure/ financial liability estimate.docx
++ed64242426e262b02076590883ab09ac528e7a7f9bb7c5b04c2dedd6451af29a  ./addenda-private/Reports - Damages and Exposure/Regulatory & Legal Readiness Packet.docx
++0193c9b4362a436677b4257646e51022a91d9ef6ab54d90fe550855b8910a283  ./addenda-private/Reports - Damages and Exposure/Offshoring & Discrimination Report.docx
++b91830f62474468855ef19528959fe96990868277d9600a58bd9b64532106a6a  ./addenda-private/Reports - Damages and Exposure/TACTICAL REPORT_ March-11-2025 FMLA COMPLIANCE & O.docx
++609669963a57fc3fef1bceb6012f14141f69a6e23cfa20af35c9a11cebf8700b  ./addenda-private/Reports - Damages and Exposure/FMLA Approval Discrepancies.docx
++330fec922fc473efb6533a872a77330ddd0d95aa3359e18598376140f5fcbba5  ./addenda-private/Reports - Damages and Exposure/ADA Failure & Workplace-Induced Health Deteriorati.docx
++308d68ac5c83b0fdfd83faff507b2034a2559ebcb4fadddc0cfcd17b367884f4  ./addenda-private/Reports - Damages and Exposure/🔷 Realistic Severance Package Proposal Based on Y.docx
++48d31eaa32970d0ad43d46fe9aa21ca3a2924e0fff21192d05a73b3cf86b46f7  ./addenda-private/Reports - Damages and Exposure/FMLA Compliance & Procedural Failures Report.docx
++bd24fa75f140a2c3f48ff7d119aef48ed076beb32a1e671783647c37fd725a92  ./addenda-private/Reports - Damages and Exposure/🚀 Moving to External Execution_ EEOC, DOL Filings.docx
++67a9d9ede5195cfe8bcd27c110797da1a645889a4b4090dc697b753cadb4b34e  ./addenda-private/Reports - Damages and Exposure/🔹 Analysis of HR & Matrix’s Response.docx
++65f112a372d0c431e51aee97b535f1c05105f6985a61b2e54b7c43f6919e86eb  ./addenda-private/Reports - Damages and Exposure/💰 How Much Could This Cost the Company.docx
++03be88ff835e1f19a303695bd3b361def8266fdff9eae007b70bd39a63aa7d63  ./addenda-private/Reports - Damages and Exposure/Leadership Communication Failures Report.docx
++8c2f78fe5d06c3af9efa10d59dc2b2a17d50bbd9d744ec9a3cefa20f1122c30f  ./addenda-private/Reports - Damages and Exposure/FORMAL ACCOUNTING OF OFFENSES- RETALIATION, WORKPL.docx
++8a932a87b2d97223940fe99a4f0ebe56297ce6a026b5a72724295f1bb478d5e3  ./addenda-private/Reports - Damages and Exposure/Strategic Case Report- Micron’s Pattern of Neglige.docx
++b6aee8059d57f0ce26619685be370e056febe14a8020f41c4e6b791f93552df4  ./addenda-private/Reports - Damages and Exposure/Confidentiality Breach & Phone Harassment Report.docx
++ead033a39b4b082cd67d9c0d0896c25d76ca91b7291c02e5300101bb50e813b6  ./addenda-private/Reports - Damages and Exposure/Summary of Employer’s FMLA Response.docx
++70a63c3d23e60f3dc4199943f46b4b6f1008167e0939ddf20ab7f7196a0fc473  ./addenda-private/Reports - Damages and Exposure/Strategic Action & Results Tracker.docx
++1ecf1bf57533a0f0b11b25e7ff47888a4d165227a9a1406daceb1f9865183a47  ./addenda-private/CIR MEMOS/Clear Timeline of Events at Micron - Starting at A.docx
++d71326da82ab0c9e37cd3089aebcc3c5cf48c69cecefe45194ab5879e1793915  ./addenda-private/CIR MEMOS/CIR - INTERNAL STRATEGIC MEMO.docx
++3cc7f263446084ae4e3fe8fbbe9b137a7810c3fe0d2eaa355727114c7702bd63  ./addenda-private/CIR MEMOS/CIR_Record_April8-16_Sanitized.pdf
++70e5bcce6eb55181e1fdf46c9ee0601bc9e7fd441b5ff9782584903d0572972d  ./addenda-private/CIR MEMOS/COMPLIANCE INTERACTION RECORD (CIR).docx
++a72f402a78828fe6f0bd40fda1df11bb57e15088c8d176b98846e035e05f0188  ./addenda-private/CIR MEMOS/CIR_Record_April8-16_Sanitized_v2.pdf
++baf27b21e0ab445e5ffc6ee7ffbb224ac1855b9e48af069f675ea098462167de  ./addenda-private/CIR MEMOS/CaseSummaryTimeline.txt
++6bc9bd849597cb088d05719e1b2a745402f8cf131a65083613a9625c1572365d  ./addenda-private/.git
++59ef4258e4a66894ef16fdf986a9c455a8539fa46b206ebd23666112dd2ba733  ./addenda-private/Seaph Technical Leadership/Abstract_ Dual-Port NVMe Support Across Fedora Lin.docx
++31209d84bfe026754d9e54c9fc8482f296a0162ee63ae73bf561d4a9c44ae674  ./addenda-private/Seaph Technical Leadership/(Internal) Strategic NVMe Storage Development & Va.docx
++56824701540d8a477ef394644c3b28fd758af4946d36b574caa1c01a74a343a8  ./addenda-private/Seaph Technical Leadership/Strategic NVMe Storage Development & Validation_ I.docx
++e0ed7e56d0f82979a8de0c59f36ccecbf2fdc909b284732c9b0c7e63ccee73f3  ./addenda-private/Seaph Technical Leadership/Strategic White Paper_ Enterprise & Client Storage.docx
++b0f49334c00b41ff158df4ff5a0963745c213dfd1c16a34d8f2d20836c3bd713  ./addenda-private/Seaph Technical Leadership/The Future of Storage_ Why Fedora 42 Changes Every.docx
++71c1776bfa4d1d080c897d4e8ec90b10df5dbac173b898fb4c0a73c543a859b6  ./addenda-private/Seaph Technical Leadership/(External) The Future of NVMe Storage Validation__.docx
++bced64a59bd27b427e61742c77afc62cd6d228282e7305843f71ee3fd99230c6  ./addenda-private/Seaph Technical Leadership/Understanding Dual-Port NVMe Support Across Fedora.docx
++9bd2f4fe462e9ec78921f9dbaccef291bb21b16617a1c154dcfb472c068d2c54  ./addenda-private/README.md
++6898cc7fafec705f90457fc3d239513d6a6ef138bfcff3caaefaeb5abbd8043f  ./addenda-private/Medical ADA and FMLA/Tactical Plan for _This Email_ – Maximum Leverage,.docx
++277a54ad7b45304123008e25fd36d250a31c7d1c08d6397e3ff9c010f04219e0  ./addenda-private/Medical ADA and FMLA/Subject_ Urgent_ Unauthorized FMLA Disclosure, Pri.docx
++665a91ed2b60c650181a0bc076b38ad3c3e1860e5b3af24c77df694e8e3a8c0f  ./addenda-private/Medical ADA and FMLA/Privacy Breach & Harassment Immediately After FMLA.docx
++8a72193bf289f54792b32af555ea113bf328e4fe8a086a4caa1e2657a3ed5bcb  ./addenda-private/Medical ADA and FMLA/Statement for Sawyer – FMLA Certification.docx
++f9c04078e6699660b126d98c86176b5f1635cb922456c1a8e724e0fe80c4b2d7  ./addenda-private/Medical ADA and FMLA/Personal Health Summary for Neurologist.docx
++755fb40502fa69ce1abe12e29c6f327d476787fdf97fe81302200a8db873610e  ./addenda-private/Medical ADA and FMLA/Subject_ Urgent_ Illegal FMLA Disclosure, Privacy_.docx
++4e7f064c6e1867d0123602fd691a49d1a2f0aa5cabaab4e72d4d42b3cb0dbe61  ./addenda-private/Medical ADA and FMLA/🔥 -_ FMLA Doctor Appointment Cheat Sheet.docx
++9800408abce2990e0bc2f10118ab4d3cbbb49806ff33c9666e6046bc244a3cb9  ./addenda-private/Medical ADA and FMLA/🔹 What Was Michelle’s Goal.docx
++3890f7b8b79fe94b77044c35e4ddb1e252f8ddc457fc1df7b80557d35b6771da  ./addenda-private/Medical ADA and FMLA/Note for Seaph Antelmi FMLA Leave.docx
++38bbb74ecd5541465414f2708b2354e5be7d8d75105a0da91851a1189d3305c6  ./addenda-private/Medical ADA and FMLA/strategic responses email.docx
++fde8244eb070d7a8b50d82ea22ab41214967149d183088251cd516e2114f7b02  ./addenda-private/Medical ADA and FMLA/Strategic Action Plan_ FMLA Compliance, Workplace_.docx
++c569ce697f6191d96b0d561600eca2a83152cab12edb5388bc9fb6eb26161956  ./addenda-private/Medical ADA and FMLA/Based on the uploaded call log screenshot, here is.docx
++afcbb1c25b1abb6c162f8707fa3deb2898f91ba0c0953f8e917f68017ac01a75  ./addenda-private/Medical ADA and FMLA/This version significantly raises the stakes by in.docx
++fcc8a6a37f09fa1b5422f7441599372e06d83fe0600369065f8e0ff92cc157cf  ./addenda-private/Medical ADA and FMLA/The strong wording in the opening paragraph is bas.docx
++a73534c8b44bf3d2e34dac8a84713fd3285c7de3df304f3392db4e6d5fd7e66c  ./addenda-private/Medical ADA and FMLA/Why a Second Version.docx
++959b66c3ef4bfc937ebf7ac16f53b2b02a04c450fbeecca4bed1b7f53642bad6  ./addenda-private/Medical ADA and FMLA/Dear [HR Contact] and Matrix Absence Management,.docx
++c8efca8e9f0f682ba34238200c74c67a2319f96efa96561fafaa52304e7afd2b  ./addenda-private/Medical ADA and FMLA/📧 Subject- Required Clarifications on FMLA Privac.docx
++c5cb34e114ee27fc465f8c8e7e984732134bfc94ca92ec76e59496968c7b4ebf  ./addenda-private/Medical ADA and FMLA/📧 SUBJECT_ Urgent_ FMLA Approval, Privacy Protect.docx
++9ea4addb390eac1550771dd7b062b1e37f16ca2a7848d8ae68f01f8a05a993ba  ./addenda-private/Medical ADA and FMLA/FMLA Approval Discrepancies.docx
++7e9ff265c86213d3deec83fd1865792c8d514922c4b05e96d9976e1e25f424c5  ./addenda-private/Medical ADA and FMLA/fmla approval discrepancy email&response.docx
++7f4e993686f7726085616649f1e7589b6a947667d47501bbea07aa7819e7aeb4  ./addenda-private/Medical ADA and FMLA/As a Person with CPTSD, Their Silence is Even More.docx
++a0a018777d0733d21fab75f32bd10acbad8a12e600d54665ada7bf7f904865b7  ./addenda-private/Medical ADA and FMLA/📧 EMAIL TEMPLATE- Force HR to Take a Position.docx
++8680af627a90ff64ddc270ddcaa320d195a319b068190e641e4a9e210d9fd820  ./addenda-private/Medical ADA and FMLA/Health-Update-Mar-10-2025-for-Doctor-Ake.pdf
++7988466842a61c9a2998bbbd5ab7d4d92fbbbefed476187fd224d376ebcf57f1  ./addenda-private/Medical ADA and FMLA/🚀 Failing the FMEA Training_ Does It Matter.docx
++33cca5ca3253a7e628e89d09430dca7c7d99734c760ad14ffbdca7e2f79baaba  ./addenda-private/Medical ADA and FMLA/Legal Review_ Ensuring Maximum Protection & Minimu.docx
++b5ba1bd05388d5a698cd43b79e63d575fe64b15e46e5fdeb8ba1400c147a55d9  ./addenda-private/Medical ADA and FMLA/FMLA response email.docx
++eee77aad883ef5968cc5c10bccae573846030e9efac866b07e1d155a5da5b0d0  ./addenda-private/Medical ADA and FMLA/Subject_ Formal Incident Report – Harassment Follo.docx
++1d09ecff0866e19fabe25bf12ca0aec7de95752921aa894c8c556b6e2b3cae85  ./addenda-private/Medical ADA and FMLA/Doctor’s FMLA Submission.docx
++8cebe553e50e079240694e340c8ddf14ca65496511bdfef612b9d3369def4613  ./addenda-private/Medical ADA and FMLA/For a case involving FMLA violations, workplace ha.docx
++fea3f0112fa552015c3ebf3c664b6e862c5f93f5a33349cb76abd5dc9bf4632a  ./addenda-private/Medical ADA and FMLA/📧 SUBJECT- FMLA Approval, Workplace Privacy & Com.docx
++d46059b19b620e435d269e412025e19446cebae4fc184815e10585c4235c07cd  ./addenda-private/Medical ADA and FMLA/Here’s a concise script you can use at the doctor’.docx
++b29d9c95a92b1e25322357c2e5f6258ad112efec50d06293c6f4d00e2daf80fa  ./addenda-private/Medical ADA and FMLA/Written Responses for FMLA Certification Questions.docx
++76ba3ed3c281ca8219bfb9d18b3defbb75fc3c4834c96ea7d666566ca7b43a9d  ./addenda-private/Medical ADA and FMLA/Response Email to HR.docx
++c0923fb225d5c961e2549b2d8b608bf4b4dc3eebcf2c51ce1e088251b0ed4f40  ./addenda-private/Medical ADA and FMLA/Urgent_ FMLA Confidentiality Concerns & Privacy Co.docx
++1ecf1bf57533a0f0b11b25e7ff47888a4d165227a9a1406daceb1f9865183a47  ./addenda-private/Legal/Clear Timeline of Events at Micron - Starting at A.docx
++9dda2f8fc769cc2752721a9f232db2eb9fb1b6150be5ca06cbbaba47e427e681  ./addenda-private/Legal/Case Summary for Legal Consultation.docx
++2b4fb9e059052953c9aab7639958159bec0d0a398d0aef42e7cdd7b1a51eba6e  ./addenda-private/Legal/Attorney Consultation Cheat Sheet.docx
++fa12b6ac992d94cfcdce9816df7be6a1830a07c76fb1264a478a1a2e45aa3281  ./addenda-private/Legal/CONFIDENTIAL LEGAL DOSSIER.docx
++9fbd6945217d540c5fca86e9cb1dcf803fde81797d1c0a718ae4ae1cfe4e415c  ./addenda-private/Legal/1️⃣ Business Attorney Review – Legal Reinforcement.docx
++a93df668e58349e1a6a9fc627c057307caf967374b55fcb9f433632fd6ef5218  ./addenda-private/Legal/Micron Case Analysis_ Full Strategic & Legal Break.docx
++baf27b21e0ab445e5ffc6ee7ffbb224ac1855b9e48af069f675ea098462167de  ./addenda-private/Legal/CaseSummaryTimeline.txt
++1ecf1bf57533a0f0b11b25e7ff47888a4d165227a9a1406daceb1f9865183a47  ./addenda-private/Time-Line/Clear Timeline of Events at Micron - Starting at A.docx
++b13472e02eb696c584273b60bdb99c769e6373420cac3c9b5ec490aee1174e3e  ./addenda-private/Time-Line/Micron Timeline --- S_ partial timeline.docx
++7a2da105c46028f8d89ce5630a3f124c6bd38deadf8aa86ab1b13ef1ca3754e8  ./addenda-private/Time-Line/Master Timeline – Micron Disability Retaliation, P.docx
++baf27b21e0ab445e5ffc6ee7ffbb224ac1855b9e48af069f675ea098462167de  ./addenda-private/Time-Line/CaseSummaryTimeline.txt
++43df8b6e0980046bd514038523b7bd8d9680d29e6c33da0c9c0175e43f4bae10  ./addenda-private/FMLA Approval Harrassment/harrassing calls - voice-call-log-call-pattern.PNG
++e654999ceac8068450c3bf9d94a3e8c769e1f0552cf189b00596b40cd2213cc4  ./addenda-private/FMLA Approval Harrassment/signal-2025-03-03-132136_002.png
++1d1957b7d7591fae4651802381e21fa314a2fd4d08506cbd6592d82b7fdaf6d2  ./addenda-private/FMLA Approval Harrassment/signal-2025-03-03-132136_003.png
++b78394542943a857fa0dd4d35bd307fa44c814a7f8f7d43ffa0b1028a868aa98  ./addenda-private/FMLA Approval Harrassment/3 harrassing phone numbers/6577394081.PNG
++ab9f3db273d9ee52b4b297a05c341e8dc2d22c8eebf8806e5b5877a72a42be12  ./addenda-private/FMLA Approval Harrassment/3 harrassing phone numbers/7208317752.PNG
++4be246c99a1d1fcf30e5a92790d76cb5882b7affe84996c4b6309919b117cbca  ./addenda-private/FMLA Approval Harrassment/3 harrassing phone numbers/3035207249.PNG
++eabf78618b5f8e4c86fc202ebbd3a545de70db91062a08d6821364508a9821da  ./addenda-private/FMLA Approval Harrassment/Employer FMLA approval.pdf
++4c3ced045dbd4de0dca9502c0f1e2f3a643ccd9d2e0abd17de9cd05de62b4265  ./addenda-private/FMLA Approval Harrassment/FMLA Submission from Doctor/fmla-doctor-submission1.PNG
++d479284ce525ba3c785f44176dd20a9147c2a1f29ffe272e5281adaa1c898aba  ./addenda-private/FMLA Approval Harrassment/FMLA Submission from Doctor/fmla-doctor-submission3.PNG
++24ca3a801421e75762f014335362b27121c37adbfde30f913bf6ec31323499eb  ./addenda-private/FMLA Approval Harrassment/FMLA Submission from Doctor/fmla-doctor-submission2.PNG
++613247c8665ca2c249d4470d95ba64c98c91920a701e4e84923f379f7a95247a  ./addenda-private/FMLA Approval Harrassment/FMLA Submission from Doctor/submitted_fmla_feb-24-2025.PDF
++f960421efb9bc3a9fa003d01d6cb8331a9414153e5ef7c472ab3818b75e82ddf  ./addenda-private/FMLA Approval Harrassment/matrix-fmla-approval-voice-mail-plus-previous V.png
++afc0e3a3c17827319ce4779adfc864ebd7b91376f75297b11c69e1c6099ef0f1  ./addenda-private/FMLA Approval Harrassment/this shows the second call - that i took - woma.png
++d800ec2caa046fd4ee6fa02fafda0a5dd3990d07605e7cddb86345427198b473  ./addenda-private/FMLA Approval Harrassment/Based on the uploaded call log screenshot, here.pdf
++9022f2878e0d77ec89af62222bcd8c2e6513027382253869ddf2bdcdf8b64e5c  ./addenda-private/FMLA Approval Harrassment/sms-log-call-pattern.png
++6f92ba7b07473ff57cb1051f23318bfe9bf1f3aced2a431e77d30f3057310ad1  ./addenda-private/Dodd Frank/Micron Whistlblower - Dodd Frank violations.docx
++fb342a74c6229a7af48857c902099f32554381cd87cbf4cddd67b67054c3cbf9  ./addenda-private/Dodd Frank/Payroll Issues and More TCR development (some of m.docx
+diff --git a/hashes/files_sha256_hashes.txt.asc b/hashes/files_sha256_hashes.txt.asc
+new file mode 100644
+index 0000000..c9a2be7
+--- /dev/null
++++ b/hashes/files_sha256_hashes.txt.asc
+@@ -0,0 +1,14 @@
++-----BEGIN PGP SIGNATURE-----
++
++iQGzBAABCgAdFiEEnrpgz8VtDCLL6BtYGHWcDb4bES8FAmg+yzMACgkQGHWcDb4b
++ES/RrgwAlAccahr5JOyLtcIQA3CKzRCTd0jSL/AH1+Lboa6SWFjKjhvwEx0CKWJj
++bAqpHFFFitX83TrMikt5kif93d/tgowA7ODc9aIA9bIPekEuW9nyqavsYlY1oM9S
++NfU8reh1XtJ4q7tJOY56W+r87E0z+mV5tfDr0IVNfj7uINC8JCry5SC6qhYMkxGx
++3UKgz1/YAd6xp/0s6vTe3B3yNBmfEhhU/93ffoO3rTaWxnXgyZOevwFUu3fBu2LW
++x7Yt7/RE2WA4IWv8Q1X1iUBMUfHV1xPSgb6BDcJejpWqS2P1M7aRqE30or9OAXl6
++IHRoWhOlaug6BAHOtl8becvtfN1aZK/mR8nM4o3aD5zvUWRO4mjzMQSocReqA2Hn
++jSpm9z4pyrUbURi4F1li2ImRlklwx7BK4lgyi5Kr+2VxNAu2uE2HQ1ZKBm7oSDtq
++e+k3dymdwCjhE9mMOyIiBSuxl72DvOezuJBrUTd++1LrzIyz04UFq6EwVY6AcZ7B
++ficp7aPu
++=d8Vu
++-----END PGP SIGNATURE-----
+diff --git a/hashes/repo_sha256_hashes.txt b/hashes/repo_sha256_hashes.txt
+new file mode 100644
+index 0000000..58b9c62
+--- /dev/null
++++ b/hashes/repo_sha256_hashes.txt
+@@ -0,0 +1 @@
++66f7729cf86868ea314c5092191857675c146f6b
+diff --git a/hashes/repo_sha256_hashes.txt.asc b/hashes/repo_sha256_hashes.txt.asc
+new file mode 100644
+index 0000000..6a23cde
+--- /dev/null
++++ b/hashes/repo_sha256_hashes.txt.asc
+@@ -0,0 +1,14 @@
++-----BEGIN PGP SIGNATURE-----
++
++iQGzBAABCgAdFiEEnrpgz8VtDCLL6BtYGHWcDb4bES8FAmg+yzIACgkQGHWcDb4b
++ES9T5Qv/cUKcMhjlZVQiCKWvuoPZrXmBDxgzblq3efrdRMIIvqY3ngZ5oqacdNdJ
++zwGQVrpgKYUVsucHrh29q+z3HD4DluXiCRYIs5UO5yrLblxAs2ioH8qq63lNZvHM
++uCbhkfvUZepTQ1k10afZ28VA8AKpSW9CiVxWekFGfVA7aCBwBIB4k9uP6aETWkY7
++R8BTUhY6GU7N5fSDzDp/CHfmduQmCUGpY8ZjMEeUXhTVRqeN0jWzGYyWWNArEQBB
++/14LYO4NGnoW6UnH70pfjhohQOb0VE1fCKHDsyprPb06c5DTO3mK09M8l4S449iN
++NUqRX0Q819XSb28eQ1Vcx7QtFUxaWjIQPzE+d9bP2En7+vX4n4+CY4Ci+IhUO793
++7FvbGBTn0+/6DYAjwaER+mXq2V7G3D63XEPmSRIScRP0ufX2nHyVE2RR9P32jVY0
++MtfFF6SqebJYPu3ZBrLy2gf8XqnRkPDopXg6tJS0Xtbcos8zvoXiwpw4lIbIddJp
++uw+4YVDk
++=2LwJ
++-----END PGP SIGNATURE-----
+diff --git a/statements-disclaimers/AI_USAGE_DISCLAIMERS.md b/statements-disclaimers/AI_USAGE_DISCLAIMERS.md
+new file mode 100644
+index 0000000..a1a6e16
+--- /dev/null
++++ b/statements-disclaimers/AI_USAGE_DISCLAIMERS.md
+@@ -0,0 +1,60 @@
++# micron-casefile-addenda (submodule)
++
++This repository contains confidential and proprietary information owned by **Micron Technology, Inc.** and is part of the **Micron SEC TCR Addendum 2025 Compliance Record** project.
++
++Please read and adhere to the terms outlined in the sections below.
++
++---
++
++## Legal Disclaimer
++
++### Confidentiality and Proprietary Information
++
++This repository contains confidential and proprietary information that is the property of **Micron Technology, Inc.** and its affiliates. The content within this repository is provided solely for internal use and for the purpose of furthering compliance and legal processes related to the **Micron SEC TCR Addendum 2025 Compliance Record**.
++
++By accessing this repository, you agree to handle all documents, evidence, and other materials contained herein with the highest level of confidentiality. Unauthorized use, disclosure, reproduction, or distribution of any part of this repository is strictly prohibited. All files are subject to applicable laws governing intellectual property, confidentiality, and privacy.
++
++### No License Grant
++
++Unless explicitly stated otherwise, nothing in this repository shall be construed as granting any license or rights to any intellectual property rights owned by **Micron Technology, Inc.** or any third party. Any use of the materials for purposes outside of internal compliance, investigation, and related matters is prohibited without prior written consent from **Micron Technology, Inc.**.
++
++### Indemnification and Limitation of Liability
++
++To the fullest extent permitted by law, **Micron Technology, Inc.** disclaims all warranties, representations, and liabilities, whether express, implied, or statutory, in connection with the use of this repository, including but not limited to any damages that may arise from the use of the materials in this repository.
++
++### Compliance with Laws and Regulations
++
++All content in this repository is provided in compliance with the applicable regulations, including the **Family and Medical Leave Act (FMLA)**, **ADA**, and other related U.S. laws and corporate policies. The repository may also contain legal documents subject to U.S. and international copyright, intellectual property, and trade secret laws.
++
++---
++
++## Intellectual Property Statement
++
++### Ownership
++
++All content in this repository, including but not limited to documents, images, files, and proprietary algorithms, is owned by **Micron Technology, Inc.** or its affiliates, unless otherwise noted. This content is protected by intellectual property laws, including **U.S. copyright**, **trademark**, **patent**, and **trade secret** laws, as well as applicable international laws.
++
++### Restrictions on Use
++
++You are granted a limited, non-exclusive, non-transferable license to access and use the contents of this repository strictly for the purposes of compliance, auditing, and related legal processes. This license is subject to the terms of the applicable confidentiality agreements and does not allow for any commercial use, reverse engineering, distribution, or modification of the materials contained in this repository.
++
++### Trademarks
++
++All trademarks, service marks, logos, and trade names used in this repository are the property of **Micron Technology, Inc.** or their respective owners. Any unauthorized use of these marks is strictly prohibited.
++
++### Third-Party Content
++
++This repository may include third-party content that is subject to additional licensing or intellectual property restrictions. All such content remains the property of its respective owners and may only be used in accordance with the terms of the applicable licenses.
++
++---
++
++## No Warranty and Disclaimer of Liability
++
++The materials in this repository are provided "as-is" without any warranties of any kind, either express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, or non-infringement. **Micron Technology, Inc.** does not warrant that the repository's contents are error-free or will meet your requirements.
++
++**Micron Technology, Inc.** is not responsible for any damages or losses resulting from the use or inability to use this repository, including but not limited to data loss, business interruption, or indirect, incidental, or consequential damages.
++
++---
++
++**Please handle all materials in this repository with the utmost care and in compliance with Micron's legal and confidentiality guidelines.**
++
+diff --git a/statements-disclaimers/Affirmation_Authorship_Strategic_Integrity.docx b/statements-disclaimers/Affirmation_Authorship_Strategic_Integrity.docx
+new file mode 100644
+index 0000000..9eaa622
+Binary files /dev/null and b/statements-disclaimers/Affirmation_Authorship_Strategic_Integrity.docx differ
+diff --git a/statements-disclaimers/Statement_Authorship_Strategic_Use_Generative_AI_SEC_Whistleblower.docx b/statements-disclaimers/Statement_Authorship_Strategic_Use_Generative_AI_SEC_Whistleblower.docx
+new file mode 100644
+index 0000000..20419c4
+Binary files /dev/null and b/statements-disclaimers/Statement_Authorship_Strategic_Use_Generative_AI_SEC_Whistleblower.docx differ
