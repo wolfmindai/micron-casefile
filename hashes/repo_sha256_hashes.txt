@@ -1,1 +1,11 @@
-66f7729cf86868ea314c5092191857675c146f6b
+Repository HEAD Commit:
+179fe09a638557b95a19e26ee53cc59d13c5f419
+
+Submodule SHAs:
+ a210db7d7755db5eaa3b267472af7774197ce919 addenda-private (timeline-anchor-2025.06.03)
+ efb1a829298f6d52ab3b59fb5bbcb55175a040b5 emails-private (v1.0-baseline-archive)
+ cb93f63d121aec2c4dab14909c0b869ed6ff0ef6 evidence-packet (heads/main)
+
+SHA-256 of .gitmodules:
+083324ecfaa22811c15a0af36a3d2fc386ef20e2db9b9d5c5f395d6347d8fdb8  .gitmodules
+
